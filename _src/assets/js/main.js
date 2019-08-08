@@ -47,12 +47,19 @@ function showData() {
   const series = document.querySelector(".js-series_section");
   let seriesToAdd = "";
   for (let item = 0; item < savedSeries.length; item++) {
-    seriesToAdd += `<div class="serie_element" data-index="${item}"><p class="show_title">${
+    seriesToAdd += `<div class="serie_element ${getFavoriteClassName(
+      item
+    )}" data-index="${item}"><p class="show_title">${
       savedSeries[item].name
     }</p><img class="show_image" src="${savedSeries[item].image}" /></div>`;
   }
   series.innerHTML = seriesToAdd;
   //console.log(series);
+}
+
+function getFavoriteClassName(item) {
+  //Si es favorito le meto la clase, si no no
+  return isThisShowFav(item) ? "show-item--fav" : "";
 }
 
 function listenShow() {
@@ -63,12 +70,12 @@ function listenShow() {
 }
 
 function favClick(ev) {
-  console.log("Hey, I just clicked a serie div!");
-  const seriesIndex = showClicked(ev);
-  if (isThisShowFav(seriesIndex)) {
+  const item = showClicked(ev);
+  if (isThisShowFav(item)) {
     //Borramos de favoritos
   } else {
     //Añadimos a favoritos
+    addToFavorites(item);
   }
   showData();
   listenShow();
@@ -76,9 +83,15 @@ function favClick(ev) {
 
 function showClicked(ev) {
   const currentTarget = ev.currentTarget;
+  //   currentTarget.classList.toggle("show-item--fav");
   const showClickedIndex = parseInt(currentTarget.dataset.index);
   console.log(currentTarget); //Devuélveme el índice de lo que he clickado
   return showClickedIndex;
+}
+
+function addToFavorites(item) {
+  favoriteShows.push(item);
+  console.log("Added to favorites:", favoriteShows);
 }
 
 function isThisShowFav(item) {
@@ -86,8 +99,10 @@ function isThisShowFav(item) {
   if (numberIndex >= 0) {
     //Si existe
     console.log(`Check if numberIndex ${item} is fav >>`, true);
+    return true;
   } else {
-    console.log(`Check if numberIndex ${item} is not fav >>`, false);
+    //console.log(`Check if numberIndex ${item} is not fav >>`, false);
+    return false;
   }
 }
 
