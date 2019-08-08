@@ -18,9 +18,14 @@ body {
   display: inline-block;
   background-color: aquamarine;
   margin: 5px;
+  padding: 10px;
 }
 
 .show_title {
   font-family: sans-serif;
   color: teal;
+}
+
+.show_image {
+  border-radius: 5px;
 }
