@@ -4,7 +4,7 @@
 
 console.log(">> Ready :)");
 
-const savedSeries = [];
+let savedSeries = [];
 
 const input = document.querySelector(".js-input");
 //const series = document.querySelector(".js-series_section");
@@ -21,9 +21,8 @@ function searchSeries() {
   return fetch(url)
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       data = formatData(data);
-      //saveData(data);
+      saveData(data);
     });
 }
 //   let results = "";
@@ -38,28 +37,20 @@ function searchSeries() {
 //   }
 
 function formatData(data) {
-  const results = [];
+  let results = [];
   for (let i = 0; i < data.length; i++) {
     results.push({
       name: data[i].show.name,
       image: data[i].show.image.medium
     });
   }
-  console.log(results);
+  return results;
 }
 
-// function saveData(data) {
-//   let savedSeries = data;
-//   console.log(savedSeries);
-// }
-
-// function listenShow() {
-//   const showDiv = document.querySelectorAll();
-// }
-
-// function addToFavs(event) {
-//   console.log(event.currentTarget);
-// }
+function saveData(data) {
+  savedSeries = data;
+  console.log(savedSeries);
+}
 
 const btn = document.querySelector(".js-btn");
 
