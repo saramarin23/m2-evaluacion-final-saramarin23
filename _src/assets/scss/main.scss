@@ -13,3 +13,14 @@ body {
 .main_section {
   display: flex;
 }
+
+.serie_element {
+  display: inline-block;
+  background-color: aquamarine;
+  margin: 5px;
+}
+
+.show_title {
+  font-family: sans-serif;
+  color: teal;
+}

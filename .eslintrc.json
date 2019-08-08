@@ -21,7 +21,7 @@
     "eqeqeq": 2,
     "strict": [2, "global"],
 
-    "no-console": 1,
+    "no-console": "off",
     "array-callback-return": 1,
     "block-scoped-var": 1,
     "consistent-return": 1,
