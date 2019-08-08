@@ -41,11 +41,20 @@ function searchSeries() {
 function formatData(data) {
   let results = [];
   for (let i = 0; i < data.length; i++) {
-    results.push({
-      name: data[i].show.name,
-      //image: displayShowImage(i),
-      id: data[i].show.id
-    });
+    if (data[i].show.image === null) {
+      results.push({
+        name: data[i].show.name,
+        image:
+          "https://via.placeholder.com/210x295/ffffff/666666/?text=No%20Photo",
+        id: data[i].show.id
+      });
+    } else {
+      results.push({
+        name: data[i].show.name,
+        image: data[i].show.image.medium,
+        id: data[i].show.id
+      });
+    }
   }
   return results;
 }
@@ -58,15 +67,13 @@ function showData() {
   const series = document.querySelector(".js-series_section");
   let seriesToAdd = "";
   for (let item = 0; item < savedSeries.length; item++) {
-    let showUrl = "";
-
     seriesToAdd += `<div class="serie_element ${getFavoriteClassName(
       item
     )}" data-index="${item}", data-name"${
       savedSeries[item].name
     }"><p class="show_title">${
       savedSeries[item].name
-    }</p><img class="show_image" src="${showUrl}" /></div>`;
+    }</p><img class="show_image" src="${savedSeries[item].image}" /></div>`;
   }
 
   series.innerHTML = seriesToAdd;
