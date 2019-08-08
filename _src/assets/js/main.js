@@ -11,7 +11,6 @@ const input = document.querySelector(".js-input");
 function handleFunction(event) {
   event.preventDefault;
   searchSeries();
-  //listenShow();
 }
 
 function searchSeries() {
@@ -23,6 +22,7 @@ function searchSeries() {
       data = formatData(data);
       saveData(data);
       showData();
+      listenShow();
     });
 }
 
@@ -56,6 +56,17 @@ function showData() {
   }
   series.innerHTML = seriesToAdd;
   console.log(series);
+}
+
+function listenShow() {
+  const serieDiv = document.querySelectorAll(".serie_element");
+  for (const serie of serieDiv) {
+    serie.addEventListener("click", favClick);
+  }
+}
+
+function favClick() {
+  console.log("Hey, I just clicked a serie div!");
 }
 
 const btn = document.querySelector(".js-btn");
