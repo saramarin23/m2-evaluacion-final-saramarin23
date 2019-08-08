@@ -22,6 +22,7 @@ function searchSeries() {
   return fetch(url)
     .then(response => response.json())
     .then(data => {
+      //displayShowImage();
       data = formatData(data);
       saveData(data);
       showData();
@@ -29,12 +30,20 @@ function searchSeries() {
     });
 }
 
+// function displayShowImage() {
+//   //¿Dónde pongo la función para que coja data?
+//   if (data.show.image.medium === null) {
+//     return "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
+//   } else {
+//     return data.show.image.medium;
+//   }
+// }
 function formatData(data) {
   let results = [];
   for (let i = 0; i < data.length; i++) {
     results.push({
       name: data[i].show.name,
-      image: data[i].show.image.medium,
+      //image: displayShowImage(i),
       id: data[i].show.id
     });
   }
@@ -49,13 +58,15 @@ function showData() {
   const series = document.querySelector(".js-series_section");
   let seriesToAdd = "";
   for (let item = 0; item < savedSeries.length; item++) {
+    let showUrl = "";
+
     seriesToAdd += `<div class="serie_element ${getFavoriteClassName(
       item
     )}" data-index="${item}", data-name"${
       savedSeries[item].name
     }"><p class="show_title">${
       savedSeries[item].name
-    }</p><img class="show_image" src="${savedSeries[item].image}" /></div>`;
+    }</p><img class="show_image" src="${showUrl}" /></div>`;
   }
 
   series.innerHTML = seriesToAdd;

@@ -1,13 +1,17 @@
 @import 'core/settings';
 
 body {
-  background: $color-white;
   margin: 0;
   height: 100vh;
+  font-family: sans-serif;
 }
 
 .form {
   margin: 20px;
+}
+
+.page__header--title {
+  color: #536473;
 }
 
 .main_section {
@@ -16,14 +20,15 @@ body {
 
 .serie_element {
   display: inline-block;
-  background-color: aquamarine;
+  background-color: #BAFFBC;
+  border-radius: 5px;
   margin: 5px;
   padding: 10px;
 }
 
 .show_title {
   font-family: sans-serif;
-  color: teal;
+  color: #BF7EB4;
 }
 
 .show_image {
@@ -31,12 +36,26 @@ body {
 }
 
 .show-item--fav {
-  background-color: crimson;
+  background-color: #06EF9D;
 }
 
 .fav_list {
+  width: 25vw;
   list-style: none;
   padding: 0;
+  margin-right: 25px;
+}
+
+.fav__container--title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #212126;
+}
+
+.favorite_element {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .fav_img {
