@@ -35,7 +35,7 @@ function formatData(data) {
     results.push({
       name: data[i].show.name,
       image: data[i].show.image.medium,
-      id: data[i].id
+      id: data[i].show.id
     });
   }
   return results;
@@ -57,13 +57,14 @@ function showData() {
       savedSeries[item].name
     }</p><img class="show_image" src="${savedSeries[item].image}" /></div>`;
   }
+
   series.innerHTML = seriesToAdd;
   //console.log(series);
 }
 
 function getFavoriteClassName(item) {
   //Si es favorito le meto la clase, si no no
-  return isThisShowFav(item) ? "show-item--fav" : "";
+  return isThisShowFav(savedSeries[item]) ? "show-item--fav" : "";
 }
 
 function listenShow() {
@@ -81,6 +82,7 @@ function favClick(ev) {
   } else {
     //Añadimos a favoritos
     addToFavorites(item);
+    showFavs();
   }
   showData();
   listenShow();
@@ -101,15 +103,16 @@ function addToFavorites(item) {
 }
 
 function removeFromFavorites(item) {
-  const favoriteIndex = favoriteShows.indexOf(item);
-  favoriteShows.splice(favoriteIndex, 1);
-  //console.log("Remove from favorites array >> Favorites:", favoriteShows);
+  let showIndex = favoriteShows.indexOf(item);
+  if (showIndex !== -1) {
+    favoriteShows.splice(showIndex, 1);
+  }
+  console.log("Remove from favorites array >> Favorites:", favoriteShows);
 }
 
 function isThisShowFav(item) {
-  const numberIndex = favoriteShows.indexOf(item);
-  //for (item of favoriteShows) {
-  if (numberIndex >= 0) {
+  const foundFav = favoriteShows.indexOf(item);
+  if (foundFav >= 0) {
     //Si existe
     //console.log(`Check if numberIndex ${item} is fav >>`, true);
     return true;
@@ -118,7 +121,21 @@ function isThisShowFav(item) {
     return false;
   }
 }
-//}
+
+function showFavs() {
+  const favoriteList = document.querySelector(".js-fav_list");
+  let favoritesToShow = "";
+  for (let item = 0; item < favoriteShows.length; item++) {
+    favoritesToShow += `<li class="favorite_element ${getFavoriteClassName(
+      item
+    )}" data-index="${item}", data-name"${
+      favoriteShows[item].name
+    }"><p class="show_title">${
+      favoriteShows[item].name
+    }</p><img class="fav_img" src="${favoriteShows[item].image}" /></li>`;
+  }
+  favoriteList.innerHTML = favoritesToShow;
+}
 
 const btn = document.querySelector(".js-btn");
 

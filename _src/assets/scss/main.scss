@@ -7,7 +7,7 @@ body {
 }
 
 .form {
-  margin-left: 20px;
+  margin: 20px;
 }
 
 .main_section {
@@ -32,4 +32,13 @@ body {
 
 .show-item--fav {
   background-color: crimson;
+}
+
+.fav_list {
+  list-style: none;
+  padding: 0;
+}
+
+.fav_img {
+  width: 50px;
 }
