@@ -1,4 +1,4 @@
-@import 'core/settings';
+@import 'core/variables';
 
 body {
   margin: 0;
@@ -11,7 +11,7 @@ body {
 }
 
 .page__header--title {
-  color: #536473;
+  color: $shows-title;
 }
 
 .main_section {
@@ -20,7 +20,7 @@ body {
 
 .serie_element {
   display: inline-block;
-  background-color: #BAFFBC;
+  background-color: $background-show;
   border-radius: 5px;
   margin: 5px;
   padding: 10px;
@@ -28,7 +28,7 @@ body {
 
 .show_title {
   font-family: sans-serif;
-  color: #536473;
+  color: $shows-title;
 }
 
 
@@ -37,11 +37,11 @@ body {
 }
 
 .show-item--fav>.show_title {
-  color: white;
+  color: $color-white;
 }
 
 .show-item--fav {
-  background-color: #06EF9D;
+  background-color: $background-fav;
 }
 
 .fav_list {
@@ -55,7 +55,7 @@ body {
   text-align: center;
   font-size: 16px;
   font-weight: 700;
-  color: #212126;
+  color: $fav-container-title;
 }
 
 .favorite_element {
@@ -74,9 +74,9 @@ body {
 }
 
 .btn__remove-favorite {
-  background: #212126;
+  background: $color-button-favorite;
   border-radius: 30%;
-  color: white;
+  color: $color-white;
   margin-left: 5px;
   height: 50%;
 }
