@@ -1,5 +1,7 @@
 "use strict";
 
+//import { start } from "repl";
+
 //import { parse } from "url";
 
 //import { format } from "url";
@@ -8,11 +10,6 @@ console.log(">> Ready :)");
 
 let savedSeries = [];
 let favoriteShows = [];
-
-let localFavs = JSON.parse(localStorage.getItem("Favorite shows"));
-if (localFavs !== null) {
-  favoriteShows = localFavs;
-}
 
 //const favoriteList = document.querySelector(".js-fav_list");
 
@@ -38,7 +35,6 @@ function handleFunction(event) {
     showFavs();
     searchSeries();
     showData();
-    listenShow();
   }
 }
 
@@ -59,7 +55,6 @@ function searchSeries() {
       saveData(data);
 
       showData();
-      listenShow();
     });
 }
 
@@ -100,12 +95,14 @@ function showData() {
   }
 
   series.innerHTML = seriesToAdd;
-  //console.log(series);
+  console.log(series);
+  listenShow();
 }
 
 function getFavoriteClassName(item) {
   //Si es favorito le meto la clase, si no no
-  return isThisShowFav(savedSeries[item]) ? "show-item--fav" : "";
+  //debugger;
+  return isThisShowFav(savedSeries[item].id) ? "show-item--fav" : "";
 }
 
 function listenShow() {
@@ -123,21 +120,19 @@ function favClick(ev) {
   } else {
     //Añadimos a favoritos
     addToFavorites(id);
-    console.log(showFavs(id));
+    //console.log(showFavs(id));
   }
   showData();
-  listenShow();
 }
 
 function showClicked(ev) {
   const currentTarget = ev.currentTarget;
   const showClickedID = parseInt(currentTarget.dataset.id);
-  console.log(showClickedID); //Devuélveme el índice de lo que he clickado
+  //console.log(showClickedID); //Devuélveme el índice de lo que he clickado
   return showClickedID;
 }
 
 function addToFavorites(id) {
-  debugger;
   for (const item of savedSeries) {
     if (item.id === id) {
       favoriteShows.push(item);
@@ -152,15 +147,11 @@ function addToFavorites(id) {
 //Si tengo favoriteShows.push((savedSeries[item])); arriba y let showIndex = favoriteShows.indexOf(item); if (showIndex !== -1) {
 // favoriteShows.splice(showIndex, 1); abajo, añade pero no borra
 
-function removeFromFavorites(item) {
-  for (const item of favoriteShows) {
-    if (item.id !== id) {
-      favoriteShows.splice(savedSeries[item].id);
+function removeFromFavorites(id) {
+  for (let index = 0; index < favoriteShows.length; index++) {
+    if (favoriteShows[index].id === id) {
+      favoriteShows.splice(index, 1);
     }
-  }
-  let showIndex = favoriteShows.indexOf(item);
-  if (showIndex !== -1) {
-    favoriteShows.splice(item, 1);
   }
   setFavoritesinLocalStorage();
   console.log("Remove from favorites array >> Favorites:", favoriteShows);
@@ -173,17 +164,6 @@ function isThisShowFav(id) {
     }
   }
   return false;
-
-  // const foundFav = savedSeries.indexOf(item);
-  // console.log(item.name);
-  // if (foundFav >= 0) {
-  //   //Si existe
-  //   console.log(`Check if numberIndex ${item.name} is fav >>`, true);
-  //   return true;
-  // } else {
-  //   //console.log(`Check if show ${item} is not fav >>`, false);
-  //   return false;
-  // }
 }
 
 function showFavs() {
@@ -199,9 +179,21 @@ function showFavs() {
     }" /></li>`;
   }
   favoriteList.innerHTML = favoritesToShow;
-  //console.log(favoriteList);
   setFavoritesinLocalStorage();
+
+  const removeBtn = document.querySelectorAll(".btn__remove-favorite");
+  removeBtn.addEventListener("click", removeFromFavorites);
+  //Meter bucle y luego función intermedia
 }
+function startApp() {
+  let localFavs = JSON.parse(localStorage.getItem("Favorite shows"));
+  if (localFavs !== null) {
+    favoriteShows = localFavs;
+    showFavs();
+  }
+}
+
+startApp();
 
 const btn = document.querySelector(".js-btn");
 
