@@ -1,27 +1,7 @@
 "use strict";
 
-//import { start } from "repl";
-
-//import { parse } from "url";
-
-//import { format } from "url";
-
-console.log(">> Ready :)");
-
 let savedSeries = [];
 let favoriteShows = [];
-
-//const favoriteList = document.querySelector(".js-fav_list");
-
-// function defaultFavorites() {
-//   let localFavs = "";
-//   for (const item of favoriteShows) {
-//     localFavs += getFavoritesFromLocalStorage(item.name);
-//   }
-//   favoriteList.innerHTML = localFavs;
-// }
-
-// defaultFavorites();
 
 const input = document.querySelector(".js-input");
 
@@ -95,13 +75,10 @@ function showData() {
   }
 
   series.innerHTML = seriesToAdd;
-  console.log(series);
   listenShow();
 }
 
 function getFavoriteClassName(item) {
-  //Si es favorito le meto la clase, si no no
-  //debugger;
   return isThisShowFav(savedSeries[item].id) ? "show-item--fav" : "";
 }
 
@@ -139,13 +116,8 @@ function addToFavorites(id) {
     }
   }
   console.log("Added to favorites:", favoriteShows);
+  showFavs();
 }
-
-//Si tengo favoriteShows.push(item); arriba y let showIndex = favoriteShows.indexOf(item); if (showIndex !== -1) {
-// favoriteShows.splice(showIndex, 1); abajo, borra pero no añade
-
-//Si tengo favoriteShows.push((savedSeries[item])); arriba y let showIndex = favoriteShows.indexOf(item); if (showIndex !== -1) {
-// favoriteShows.splice(showIndex, 1); abajo, añade pero no borra
 
 function removeFromFavorites(id) {
   for (let index = 0; index < favoriteShows.length; index++) {
@@ -180,12 +152,28 @@ function showFavs() {
   }
   favoriteList.innerHTML = favoritesToShow;
   setFavoritesinLocalStorage();
+  //   const removeBtn = document.querySelectorAll(".btn__remove-favorite");
 
-  const removeBtn = document.querySelectorAll(".btn__remove-favorite");
-  removeBtn.addEventListener("click", removeFromFavorites);
+  // Me da error porque está cogiendo el addEventListener como función
+
+  //   function removeFavsFromList() {
+  //   removeBtn.addEventListener("click", removeFavsFromList);
+  //     for (let button of removeBtn) {
+  //       getFavoritesFromLocalStorage(button);
+  //       console.log(getFavoritesFromLocalStorage(button));
+  //       removeFromFavorites(); //Es ID
+
+  //       //   if (favoriteShows[index].id === id) {
+  //       //     favoritesToShow.splice(item, 1);
+  //       //   }
+  //     }
+  // removeFavsFromList();
+
   //Meter bucle y luego función intermedia
 }
+
 function startApp() {
+  //Función que nos permite mostrar favoritos nada más comenzar
   let localFavs = JSON.parse(localStorage.getItem("Favorite shows"));
   if (localFavs !== null) {
     favoriteShows = localFavs;
