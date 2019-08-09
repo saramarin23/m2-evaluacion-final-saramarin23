@@ -61,3 +61,16 @@ body {
 .fav_img {
   width: 50px;
 }
+
+.title_fav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn__remove-favorite {
+  background: #212126;
+  color: white;
+  margin-left: 5px;
+  height: 50%;
+}

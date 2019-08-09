@@ -9,6 +9,23 @@ console.log(">> Ready :)");
 let savedSeries = [];
 let favoriteShows = [];
 
+let localFavs = JSON.parse(localStorage.getItem("Favorite shows"));
+if (localFavs !== null) {
+  favoriteShows = localFavs;
+}
+
+//const favoriteList = document.querySelector(".js-fav_list");
+
+// function defaultFavorites() {
+//   let localFavs = "";
+//   for (const item of favoriteShows) {
+//     localFavs += getFavoritesFromLocalStorage(item.name);
+//   }
+//   favoriteList.innerHTML = localFavs;
+// }
+
+// defaultFavorites();
+
 const input = document.querySelector(".js-input");
 
 function handleFunction(event) {
@@ -18,6 +35,7 @@ function handleFunction(event) {
     searchSeries();
   } else {
     favoriteShows = favsFromLocalStorage;
+    showFavs();
     searchSeries();
     showData();
     listenShow();
@@ -37,7 +55,6 @@ function searchSeries() {
   return fetch(url)
     .then(response => response.json())
     .then(data => {
-      //displayShowImage();
       data = formatData(data);
       saveData(data);
 
@@ -108,7 +125,7 @@ function favClick(ev) {
   } else {
     //Añadimos a favoritos
     addToFavorites(item);
-    showFavs();
+    console.log(showFavs(item));
   }
   showData();
   listenShow();
@@ -116,7 +133,6 @@ function favClick(ev) {
 
 function showClicked(ev) {
   const currentTarget = ev.currentTarget;
-  //   currentTarget.classList.toggle("show-item--fav");
   const showClickedIndex = parseInt(currentTarget.dataset.index);
   //const showClickedName = currentTarget.dataset.name;
   console.log(currentTarget); //Devuélveme el índice de lo que he clickado
@@ -125,27 +141,36 @@ function showClicked(ev) {
 
 function addToFavorites(item) {
   favoriteShows.push(savedSeries[item]);
-  console.log("Added to favorites:", favoriteShows);
+  //console.log("Added to favorites:", favoriteShows);
 }
+
+//Si tengo favoriteShows.push(item); arriba y let showIndex = favoriteShows.indexOf(item); if (showIndex !== -1) {
+// favoriteShows.splice(showIndex, 1); abajo, borra pero no añade
+
+//Si tengo favoriteShows.push((savedSeries[item])); arriba y let showIndex = favoriteShows.indexOf(item); if (showIndex !== -1) {
+// favoriteShows.splice(showIndex, 1); abajo, añade pero no borra
 
 function removeFromFavorites(item) {
   let showIndex = favoriteShows.indexOf(item);
   if (showIndex !== -1) {
-    favoriteShows.splice(showIndex, 1);
+    favoriteShows.splice(item, 1);
   }
+  setFavoritesinLocalStorage();
   console.log("Remove from favorites array >> Favorites:", favoriteShows);
 }
 
 function isThisShowFav(item) {
-  //¿Y si metemos un bucle para buscar el id en el indexOf??
+  //¿Y si metemos un bucle para buscar el id en el indexOf?? Línea 168 muestra [object object]
   const foundFav = favoriteShows.indexOf(item);
-  if (foundFav >= 0) {
-    //Si existe
-    //console.log(`Check if numberIndex ${item} is fav >>`, true);
-    return true;
-  } else {
-    //console.log(`Check if show ${item} is not fav >>`, false);
-    return false;
+  for (const item of favoriteShows) {
+    if (foundFav >= 0) {
+      //Si existe
+      console.log(`Check if numberIndex ${item} is fav >>`, true);
+      return true;
+    } else {
+      //console.log(`Check if show ${item} is not fav >>`, false);
+      return false;
+    }
   }
 }
 
@@ -153,15 +178,16 @@ function showFavs() {
   const favoriteList = document.querySelector(".js-fav_list");
   let favoritesToShow = "";
   for (let item = 0; item < favoriteShows.length; item++) {
-    favoritesToShow += `<li class="favorite_element ${getFavoriteClassName(
-      item
-    )}" data-index="${item}", data-name"${
+    favoritesToShow += `<li class="favorite_element" data-index="${item}", data-name"${
       favoriteShows[item].name
-    }"><p class="show_title">${
+    }"><div class="title_fav"><p class="show_title">${
       favoriteShows[item].name
-    }</p><img class="fav_img" src="${favoriteShows[item].image}" /></li>`;
+    }</p><button class="btn__remove-favorite">X</button></div><img class="fav_img" src="${
+      favoriteShows[item].image
+    }" /></li>`;
   }
   favoriteList.innerHTML = favoritesToShow;
+  //console.log(favoriteList);
   setFavoritesinLocalStorage();
 }
 
