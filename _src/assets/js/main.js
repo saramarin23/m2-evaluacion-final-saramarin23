@@ -12,8 +12,23 @@ let favoriteShows = [];
 const input = document.querySelector(".js-input");
 
 function handleFunction(event) {
-  event.preventDefault;
-  searchSeries();
+  event.preventDefault();
+  const favsFromLocalStorage = getFavoritesFromLocalStorage();
+  if (favsFromLocalStorage === null) {
+    searchSeries();
+  } else {
+    favoriteShows = favsFromLocalStorage;
+    searchSeries();
+    showData();
+    listenShow();
+  }
+}
+
+function setFavoritesinLocalStorage() {
+  localStorage.setItem("Favorite shows", JSON.stringify(favoriteShows));
+}
+function getFavoritesFromLocalStorage() {
+  return JSON.parse(localStorage.getItem("Favorite shows"));
 }
 
 function searchSeries() {
@@ -25,19 +40,12 @@ function searchSeries() {
       //displayShowImage();
       data = formatData(data);
       saveData(data);
+
       showData();
       listenShow();
     });
 }
 
-// function displayShowImage() {
-//   //¿Dónde pongo la función para que coja data?
-//   if (data.show.image.medium === null) {
-//     return "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
-//   } else {
-//     return data.show.image.medium;
-//   }
-// }
 function formatData(data) {
   let results = [];
   for (let i = 0; i < data.length; i++) {
@@ -129,6 +137,7 @@ function removeFromFavorites(item) {
 }
 
 function isThisShowFav(item) {
+  //¿Y si metemos un bucle para buscar el id en el indexOf??
   const foundFav = favoriteShows.indexOf(item);
   if (foundFav >= 0) {
     //Si existe
@@ -153,6 +162,7 @@ function showFavs() {
     }</p><img class="fav_img" src="${favoriteShows[item].image}" /></li>`;
   }
   favoriteList.innerHTML = favoritesToShow;
+  setFavoritesinLocalStorage();
 }
 
 const btn = document.querySelector(".js-btn");
