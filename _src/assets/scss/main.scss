@@ -28,7 +28,12 @@ body {
 
 .show_title {
   font-family: sans-serif;
-  color: #BF7EB4;
+  color: #536473;
+}
+
+.show-item--fav>.show_title {
+  color: white;
+
 }
 
 .show_image {
@@ -70,6 +75,7 @@ body {
 
 .btn__remove-favorite {
   background: #212126;
+  border-radius: 5px;
   color: white;
   margin-left: 5px;
   height: 50%;

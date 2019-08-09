@@ -94,9 +94,7 @@ function showData() {
   for (let item = 0; item < savedSeries.length; item++) {
     seriesToAdd += `<div class="serie_element ${getFavoriteClassName(
       item
-    )}" data-index="${item}", data-name"${
-      savedSeries[item].name
-    }"><p class="show_title">${
+    )}" data-id="${savedSeries[item].id}"><p class="show_title">${
       savedSeries[item].name
     }</p><img class="show_image" src="${savedSeries[item].image}" /></div>`;
   }
@@ -118,14 +116,14 @@ function listenShow() {
 }
 
 function favClick(ev) {
-  const item = showClicked(ev);
-  if (isThisShowFav(item)) {
+  const id = showClicked(ev);
+  if (isThisShowFav(id)) {
     //Borramos de favoritos
-    removeFromFavorites(item);
+    removeFromFavorites(id);
   } else {
     //Añadimos a favoritos
-    addToFavorites(item);
-    console.log(showFavs(item));
+    addToFavorites(id);
+    console.log(showFavs(id));
   }
   showData();
   listenShow();
@@ -133,15 +131,19 @@ function favClick(ev) {
 
 function showClicked(ev) {
   const currentTarget = ev.currentTarget;
-  const showClickedIndex = parseInt(currentTarget.dataset.index);
-  //const showClickedName = currentTarget.dataset.name;
-  console.log(currentTarget); //Devuélveme el índice de lo que he clickado
-  return showClickedIndex;
+  const showClickedID = parseInt(currentTarget.dataset.id);
+  console.log(showClickedID); //Devuélveme el índice de lo que he clickado
+  return showClickedID;
 }
 
-function addToFavorites(item) {
-  favoriteShows.push(savedSeries[item]);
-  //console.log("Added to favorites:", favoriteShows);
+function addToFavorites(id) {
+  debugger;
+  for (const item of savedSeries) {
+    if (item.id === id) {
+      favoriteShows.push(item);
+    }
+  }
+  console.log("Added to favorites:", favoriteShows);
 }
 
 //Si tengo favoriteShows.push(item); arriba y let showIndex = favoriteShows.indexOf(item); if (showIndex !== -1) {
@@ -151,6 +153,11 @@ function addToFavorites(item) {
 // favoriteShows.splice(showIndex, 1); abajo, añade pero no borra
 
 function removeFromFavorites(item) {
+  for (const item of favoriteShows) {
+    if (item.id !== id) {
+      favoriteShows.splice(savedSeries[item].id);
+    }
+  }
   let showIndex = favoriteShows.indexOf(item);
   if (showIndex !== -1) {
     favoriteShows.splice(item, 1);
@@ -159,27 +166,32 @@ function removeFromFavorites(item) {
   console.log("Remove from favorites array >> Favorites:", favoriteShows);
 }
 
-function isThisShowFav(item) {
-  //¿Y si metemos un bucle para buscar el id en el indexOf?? Línea 168 muestra [object object]
-  const foundFav = favoriteShows.indexOf(item);
+function isThisShowFav(id) {
   for (const item of favoriteShows) {
-    if (foundFav >= 0) {
-      //Si existe
-      console.log(`Check if numberIndex ${item} is fav >>`, true);
+    if (item.id === id) {
       return true;
-    } else {
-      //console.log(`Check if show ${item} is not fav >>`, false);
-      return false;
     }
   }
+  return false;
+
+  // const foundFav = savedSeries.indexOf(item);
+  // console.log(item.name);
+  // if (foundFav >= 0) {
+  //   //Si existe
+  //   console.log(`Check if numberIndex ${item.name} is fav >>`, true);
+  //   return true;
+  // } else {
+  //   //console.log(`Check if show ${item} is not fav >>`, false);
+  //   return false;
+  // }
 }
 
 function showFavs() {
   const favoriteList = document.querySelector(".js-fav_list");
   let favoritesToShow = "";
   for (let item = 0; item < favoriteShows.length; item++) {
-    favoritesToShow += `<li class="favorite_element" data-index="${item}", data-name"${
-      favoriteShows[item].name
+    favoritesToShow += `<li class="favorite_element" data-index="${item}", data-id"${
+      favoriteShows[item].id
     }"><div class="title_fav"><p class="show_title">${
       favoriteShows[item].name
     }</p><button class="btn__remove-favorite">X</button></div><img class="fav_img" src="${
