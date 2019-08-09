@@ -13,8 +13,8 @@ function handleFunction(event) {
   } else {
     favoriteShows = favsFromLocalStorage;
     showFavs();
-    searchSeries();
     showData();
+    searchSeries();
   }
 }
 
@@ -125,7 +125,7 @@ function removeFromFavorites(id) {
       favoriteShows.splice(index, 1);
     }
   }
-  setFavoritesinLocalStorage();
+  showFavs();
   console.log("Remove from favorites array >> Favorites:", favoriteShows);
 }
 
