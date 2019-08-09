@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+    <head>
+        <meta charset="UTF-8" />
+        <title>Buscador de series</title>
+        <link rel="icon" href="favicon.png" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+    </head>
+    
+    <body>
+        <div class="page">
+            <header class="page__header">
+                <form class="form">
+                     <h1 class="page__header--title">Buscador de series</h1>
+
+                    <input class="js-input input" type="text" placeholder="Introduce la serie aquí"
+                    />
+                    <button class="js-btn btn" type="submit">Buscar serie</button>
+                </form>
+            </header>
+            <main class="page__main">
+                <section class="main_section">
+                    <div class="fav_section">
+                         <h2 class="fav__container--title">Favoritos</h2>
+
+                        <ul class="js-fav_list fav_list"></ul>
+                    </div>
+                    <div class="js-series_section series_section"></div>
+                </section>
+            </main>
+        </div>
+        <script src="assets/js/main.js"></script>
+    </body>
+
+</html>
