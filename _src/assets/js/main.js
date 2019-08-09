@@ -33,7 +33,6 @@ function searchSeries() {
     .then(data => {
       data = formatData(data);
       saveData(data);
-
       showData();
     });
 }
@@ -92,12 +91,9 @@ function listenShow() {
 function favClick(ev) {
   const id = showClicked(ev);
   if (isThisShowFav(id)) {
-    //Borramos de favoritos
     removeFromFavorites(id);
   } else {
-    //Añadimos a favoritos
     addToFavorites(id);
-    //console.log(showFavs(id));
   }
   showData();
 }
@@ -105,7 +101,6 @@ function favClick(ev) {
 function showClicked(ev) {
   const currentTarget = ev.currentTarget;
   const showClickedID = parseInt(currentTarget.dataset.id);
-  //console.log(showClickedID); //Devuélveme el índice de lo que he clickado
   return showClickedID;
 }
 
@@ -173,7 +168,6 @@ function showFavs() {
 }
 
 function startApp() {
-  //Función que nos permite mostrar favoritos nada más comenzar
   let localFavs = JSON.parse(localStorage.getItem("Favorite shows"));
   if (localFavs !== null) {
     favoriteShows = localFavs;
